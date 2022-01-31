@@ -15,6 +15,7 @@ jobs:
 
       # Deploy ARM template
     - name: Run ARM deploy
+      id: deploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
@@ -23,4 +24,6 @@ jobs:
         parameters: ./azuredeploy.parameters.json
 
       # output containerName variable from template
-    - run: echo ${{ steps.deploy.outputs.containerName }}
+    - run: |
+        echo "Storage Account Name: ${{ steps.deploy.outputs.storageAccountName }}"
+        echo "Storage Account ID: ${{ steps.deploy.outputs.storageAccountId }}"
