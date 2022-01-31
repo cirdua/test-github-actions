@@ -1,4 +1,24 @@
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      storageAccountName:
+        description: Storage Account Name
+      location:
+        description: Location
+      storageAccountType:
+        type: choice
+        description: Storage Account Type
+        default: Standard_LRS
+        options:
+        - Premium_LRS
+        - Premium_ZRS
+        - Standard_GRS
+        - Standard_GZRS
+        - Standard_LRS
+        - Standard_RAGRS
+        - Standard_RAGZRS
+        - Standard_ZRS
+
 name: Azure ARM
 jobs:
   build-and-deploy:
@@ -21,7 +41,11 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./azuredeploy.json
-        parameters: ./azuredeploy.parameters.json
+        parameters: >
+          ./azuredeploy.parameters.json
+          storageAccountType=${{ github.event.inputs.storageAccountType }}
+          storageAccountName=${{ github.event.inputs.storageAccountName }}
+          location=${{ github.event.inputs.location }}
 
       # output containerName variable from template
     - name: Output Storage Account Name
