@@ -43,11 +43,11 @@
   },
 
   "variables": {
-    "uniqueName": "[uniqueString(resourceGroup().id, parameters('storageAccountName'))]",
+    // Create a unique Storage Account name with resource group and Storage Account Name as seed
+    "uniqueName": "[toLower( concat( parameters('storageAccountName'), uniqueString(resourceGroup().id, parameters('storageAccountName'))))]",
     "storageAccountLength": "[lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName')))]",
-    // longstring: substring(concat( parameters('storageAccountName'), uniqueString(resourceGroup().id)), 0, sub(24, add(lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName'))),1)) )
-    // shortstring: concat( parameters('storageAccountName'), uniqueString(resourceGroup().id))
-    "storageName": "[toLower( if (greater(4, variables('storageAccountLength')),concat( parameters('storageAccountName'), variables('uniqueName')),substring(concat( parameters('storageAccountName'), variables('uniqueName')), 0, sub(23, variables('storageAccountLength')))))]"
+    // Trim unique name to 24 characters only
+    "storageName": "[if (greater(4, variables('storageAccountLength')), variables('uniqueName'), substring(variables('uniqueName'), 0, sub(23, variables('storageAccountLength'))))]"
   },
   "resources": [
     {
