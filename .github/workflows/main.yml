@@ -1,12 +1,25 @@
 name: Lint ARM Templates
 
-on: ["push"]
+on: push
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@main
-    - name: json-lint
-      uses: ocular-d/json-linter@0.0.2
+    - name: Checkout ARM TTK
+      uses: actions/checkout@main
+      with:
+        repository: Azure/arm-ttk
+        path: './arm-ttk'
+    - name:  Validate Storage Account Template
+      run: |
+        Import-Module ./arm-ttk/arm-ttk/arm-ttk.psd1
+        $TestResults = Test-AzTemplate -TemplatePath ./templates/storageAccount
+        $TestFailures =  $TestResults | Where-Object { -not $_.Passed }
+        $FailureTargetObjects = $TestFailures |
+          Select-Object -ExpandProperty Errors |
+          Select-Object -ExpandProperty TargetObject
+
+
