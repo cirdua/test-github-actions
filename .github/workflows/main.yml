@@ -13,7 +13,7 @@ jobs:
       with:
         repository: Azure/arm-ttk
         path: './arm-ttk'
-    - name:  Validate Storage Account Template
+    - name:  Validate ARM Templates
       run: |
         Import-Module ./arm-ttk/arm-ttk/arm-ttk.psd1
 
