@@ -23,6 +23,7 @@ name: Deploy Storage Account Azure ARM
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: deployment
     steps:
 
       # Checkout code
