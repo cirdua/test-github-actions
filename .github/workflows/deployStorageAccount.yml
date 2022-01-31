@@ -24,6 +24,7 @@ jobs:
         parameters: ./azuredeploy.parameters.json
 
       # output containerName variable from template
-    - run: |
+    - name: Output Storage Account Name
+      run: |
         echo "Storage Account Name: ${{ steps.deploy.outputs.storageAccountName }}"
         echo "Storage Account ID: ${{ steps.deploy.outputs.storageAccountId }}"
