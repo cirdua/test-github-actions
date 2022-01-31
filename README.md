@@ -1,6 +1,8 @@
 # AzureRM using Github Workflows
 Deploy ARM Templates using Github Workflows
 
+[![Lint ARM Templates](https://github.com/cirdua/test-github-actions/actions/workflows/main.yml/badge.svg)](https://github.com/cirdua/test-github-actions/actions/workflows/main.yml)
+
 ## Prerequisites
 1. Create Resource Group
    ```bash
@@ -23,6 +25,10 @@ Deploy ARM Templates using Github Workflows
 4. Select Storage Account Type
 5. Created Storage Account will be indicated in Output step of the workflow.
    Resource will be placed in Resource Group indicated in `AZURE_RG` Secret
+
+## Tests
+ARM Test Toolkit is used in Github Workflows
+For details on installation, refer to this [link](https://github.com/Azure/arm-ttk/blob/master/arm-ttk/README.md)
 
 
 ## References
