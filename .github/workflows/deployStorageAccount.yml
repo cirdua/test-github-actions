@@ -19,7 +19,7 @@ on:
         - Standard_RAGZRS
         - Standard_ZRS
 
-name: Azure ARM
+name: Deploy Storage Account Azure ARM
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
