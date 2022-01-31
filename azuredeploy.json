@@ -43,7 +43,9 @@
   },
 
   "variables": {
-    "storageName": "[toLower( substring(concat( parameters('storageAccountName'), uniqueString(resourceGroup().id)), 0, sub(24, add(lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName'))),1)) ) )]"
+    // longstring: substring(concat( parameters('storageAccountName'), uniqueString(resourceGroup().id)), 0, sub(24, add(lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName'))),1)) )
+    // shortstring: concat( parameters('storageAccountName'), uniqueString(resourceGroup().id))
+    "storageName": "[toLower( if (greater(4, lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName')))),concat( parameters('storageAccountName'), uniqueString(resourceGroup().id)),substring(concat( parameters('storageAccountName'), uniqueString(resourceGroup().id)), 0, sub(24, add(lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName'))),1)) )))]"
   },
   "resources": [
     {
