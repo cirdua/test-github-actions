@@ -41,8 +41,9 @@
       }
     }
   },
+
   "variables": {
-    "storageName": "[toLower( concat( parameters('storageAccountName'), uniqueString(resourceGroup().id) ) )]"
+    "storageName": "[toLower( concat( parameters('storageAccountName'), substring(uniqueString(resourceGroup().id), 0, sub(24, lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName')))) ) ))]"
   },
   "resources": [
     {
