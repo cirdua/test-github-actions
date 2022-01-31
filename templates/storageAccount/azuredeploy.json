@@ -43,6 +43,7 @@
   },
 
   "variables": {
+    "test": "hello",
     // Create a unique Storage Account name with resource group and Storage Account Name as seed
     "uniqueName": "[toLower( concat( parameters('storageAccountName'), uniqueString(resourceGroup().id, parameters('storageAccountName'))))]",
     "storageAccountLength": "[lastIndexOf(parameters('storageAccountName'), last(parameters('storageAccountName')))]",
