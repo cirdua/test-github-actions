@@ -25,7 +25,7 @@ jobs:
           foreach ($result in  $TestResults){ Write-Host $result.Name `t`t`t`Passed: $result.passed }
 
           $TestFailures =  $TestResults | Where-Object { -not $_.Passed }
-          foreach ($failure in  $TestFailures){ throw $failure.Name `t $failure.AllOutput }
+          foreach ($failure in  $TestFailures){ throw $failure.Name     $failure.AllOutput }
         }
 
 
