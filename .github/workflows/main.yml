@@ -1,27 +1,12 @@
-name: Test Input
+name: Lint ARM Templates
 
-
-on:
-  workflow_dispatch:
-    inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options:
-        - monalisa
-        - cschleiden
-      message:
-        required: true
-      use-emoji:
-        type: boolean
-        description: Include 🎉🤣 emojis
-      # environment:
-      #   type: environment
+on: ["push"]
 
 jobs:
-  greet:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+    - uses: actions/checkout@main
+    - name: json-lint
+      uses: ocular-d/json-linter@0.0.2
