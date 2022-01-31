@@ -1,5 +1,15 @@
 {
-    "storageAccountType": "Standard_LRS",
-    "storageAccountName": "testworkflow124124551211",
-    "location": "southeastasia"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "storageAccountName": {
+            "value": "testworkflow124124551211"
+        },
+        "location": {
+            "value": "southeastasia"
+        }
+    }
 }
