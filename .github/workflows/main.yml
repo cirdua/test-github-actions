@@ -1,27 +1,35 @@
-name: Test Input
-
+name: Lint ARM Templates
 
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options:
-        - monalisa
-        - cschleiden
-      message:
-        required: true
-      use-emoji:
-        type: boolean
-        description: Include 🎉🤣 emojis
-      # environment:
-      #   type: environment
+  push:
+    paths:
+    - 'templates/*'
 
 jobs:
-  greet:
-    runs-on: ubuntu-latest
+  lint:
+    runs-on: windows-latest
 
     steps:
-    - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+    - uses: actions/checkout@main
+    - name: Checkout ARM TTK
+      uses: actions/checkout@main
+      with:
+        repository: Azure/arm-ttk
+        path: './arm-ttk'
+    - name:  Validate ARM Templates
+      run: |
+        Import-Module ./arm-ttk/arm-ttk/arm-ttk.psd1
+
+        $templateDir = Get-ChildItem ./templates/
+
+        foreach ($dir in $templateDir)
+        {
+          $TestResults = Test-AzTemplate -TemplatePath $dir
+          foreach ($result in  $TestResults){ Write-Host "$($result.Name) `t`t`t`Passed: $($result.passed)" }
+
+          $TestFailures =  $TestResults | Where-Object { -not $_.Passed }
+          foreach ($failure in  $TestFailures){ throw "$($failure.Name) `t $($failure.AllOutput)" }
+        }
+
+
+

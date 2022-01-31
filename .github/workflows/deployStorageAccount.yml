@@ -41,9 +41,9 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ./azuredeploy.json
+        template: ./templates/storageAccount/azuredeploy.json
         parameters: >
-          ./azuredeploy.parameters.json
+          ./templates/storageAccount/azuredeploy.parameters.json
           storageAccountType=${{ github.event.inputs.storageAccountType }}
           storageAccountName=${{ github.event.inputs.storageAccountName }}
           location=${{ github.event.inputs.location }}
